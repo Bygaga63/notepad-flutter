@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       navigatorKey: di<NavigationService>().navigatorKey,
-      initialRoute: Routes.category,
+      initialRoute: Routes.categories,
       onGenerateRoute: Router().onGenerateRoute,
     );
   }

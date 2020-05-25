@@ -14,13 +14,18 @@ class NoteRepository {
 
   Future<List<Note>> loadByCategory(int categoryId) async {
     List<NoteModel> noteModels = await _datasource.loadByCategory(categoryId);
-    final result = noteModels.map((noteModel) => noteModel.toDomain());
+
+    final result = noteModels.map((noteModel) => noteModel.toDomain()).toList();
     return result;
   }
 
-  Future<Note> create(Note note) async {
-    final createdCandidate = NoteModel.fromDomain(note);
-    final noteModel = await _datasource.create(createdCandidate);
+  Future<Note> save(Note note) async {
+    final candidate = NoteModel.fromDomain(note);
+    final noteModel = await _datasource.create(candidate);
     return noteModel.toDomain();
+  }
+
+  Future<void> deleteNote(int noteId) async {
+    _datasource.delete(noteId);
   }
 }

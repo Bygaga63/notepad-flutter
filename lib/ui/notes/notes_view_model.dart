@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutterappstackednotepad/app/locator.dart';
+import 'package:flutterappstackednotepad/app/routes.gr.dart';
 import 'package:flutterappstackednotepad/models/note.dart';
 import 'package:flutterappstackednotepad/services/note_service.dart';
 import 'package:stacked/stacked.dart';
@@ -9,13 +10,13 @@ import 'package:stacked_services/stacked_services.dart';
 
 class NotesViewModel extends BaseViewModel {
   final int categoryId;
+  final _noteService = di<NoteService>();
+  final _navigationService = di<NavigationService>();
 
   NotesViewModel({
     @required this.categoryId,
   });
 
-  final _noteService = di<NoteService>();
-  final _snackService = di<SnackbarService>();
   List<Note> _notes = [];
 
   List<Note> get notes => UnmodifiableListView(_notes);
@@ -27,10 +28,20 @@ class NotesViewModel extends BaseViewModel {
     _notes = [...result];
   }
 
-  void createNote(Note note) async {
-    final result = await runBusyFuture(_noteService.create(note));
-    _notes = [..._notes, result];
-    _snackService.showSnackbar(
-        title: 'Note successfully created!', iconData: Icons.done);
+  void navigateToCreateEditNote([Note note]) {
+    final newNote = Note(text: '', categoryId: categoryId, title: '');
+
+    if (note == null) {
+      note ??= newNote;
+    }
+    _navigationService
+        .navigateTo(Routes.createEditNoteView,
+            arguments: CreateEditNoteViewArguments(note: note))
+        .then((value) => loadNotes(categoryId));
+  }
+
+  Future<void> deleteNote(int noteId) async {
+    await runBusyFuture(_noteService.deleteNote(noteId));
+    _notes = _notes.where((note) => note.id != noteId).toList();
   }
 }

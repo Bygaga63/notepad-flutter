@@ -20,5 +20,10 @@ class NoteDatasource {
   }
 
   Future<Box<NoteModel>> _getBox() async =>
-      Hive.openBox<NoteModel>(HiveTypes.categoryBoxName);
+      Hive.openBox<NoteModel>(HiveTypes.noteBoxName);
+
+  Future<void> delete(int noteId) async {
+    final box = await _getBox();
+    await box.delete(noteId);
+  }
 }

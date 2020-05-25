@@ -29,9 +29,8 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<NoteDatasource>(() => NoteDatasource());
   g.registerLazySingleton<NoteRepository>(
       () => NoteRepository(datasource: g<NoteDatasource>()));
-  g.registerLazySingleton<NoteService>(() => NoteService(
-      categoryRepository: g<CategoryRepository>(),
-      noteRepository: g<NoteRepository>()));
+  g.registerLazySingleton<NoteService>(
+      () => NoteService(noteRepository: g<NoteRepository>()));
   g.registerLazySingleton<SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
 

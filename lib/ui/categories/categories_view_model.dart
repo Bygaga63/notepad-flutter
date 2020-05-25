@@ -5,7 +5,6 @@ import 'package:flutterappstackednotepad/services/category_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-
 class CategoriesViewModel extends BaseViewModel {
   final _categoryService = di<CategoryService>();
   final _navigationService = di<NavigationService>();
@@ -29,7 +28,7 @@ class CategoriesViewModel extends BaseViewModel {
   }
 
   void navigateToNote(int id) {
-    _navigationService.navigateTo(Routes.note,
+    _navigationService.navigateTo(Routes.notes,
         arguments: NotesViewArguments(categoryId: id));
   }
 

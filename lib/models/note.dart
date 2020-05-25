@@ -7,14 +7,14 @@ class Note {
   final String text;
 
   const Note({
-    @required this.id,
+    this.id,
     @required this.categoryId,
     @required this.title,
     @required this.text,
   });
 
   Note copyWith({
-    String id,
+    int id,
     int categoryId,
     String title,
     String text,
@@ -25,5 +25,10 @@ class Note {
       title: title ?? this.title,
       text: text ?? this.text,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Note{id: $id, categoryId: $categoryId, title: $title, text: $text}';
   }
 }
