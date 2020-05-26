@@ -10,10 +10,16 @@ class CategoryDatasource {
     return box.values.toList();
   }
 
-  Future<CategoryModel> save(CategoryModel category) async {
+  Future<CategoryModel> create(CategoryModel category) async {
     final box = await _getBox();
     final categoryId = await box.add(category);
     return box.get(categoryId);
+  }
+
+  Future<CategoryModel> update(int id, CategoryModel category) async {
+    final box = await _getBox();
+    await box.put(id, category);
+    return box.get(id);
   }
 
   Future<Box<CategoryModel>> _getBox() async =>

@@ -21,7 +21,12 @@ class NoteRepository {
 
   Future<Note> save(Note note) async {
     final candidate = NoteModel.fromDomain(note);
-    final noteModel = await _datasource.create(candidate);
+    var noteModel;
+    if (note.id == null) {
+      noteModel = await _datasource.create(candidate);
+    } else {
+      noteModel = await _datasource.update(note.id, candidate);
+    }
     return noteModel.toDomain();
   }
 

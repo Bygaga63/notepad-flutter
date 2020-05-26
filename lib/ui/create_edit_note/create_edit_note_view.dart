@@ -14,7 +14,7 @@ class CreateEditNoteView extends StatefulWidget {
 class _CreateEditNoteViewState extends State<CreateEditNoteView> {
   var _titleController;
   var _textController;
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -36,6 +36,7 @@ class _CreateEditNoteViewState extends State<CreateEditNoteView> {
       viewModelBuilder: () => CreateEditNoteViewModel(note: widget.note),
       builder: (context, model, child) {
         return Scaffold(
+          key: _scaffoldKey,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text(model.isEdit ? 'Edit' : 'Create'),
@@ -71,6 +72,10 @@ class _CreateEditNoteViewState extends State<CreateEditNoteView> {
               final title = _titleController.text;
               final text = _textController.text;
               model.saveNote(title, text);
+              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                content: Text('Saved'),
+                backgroundColor: Colors.blueGrey,
+              ));
               FocusScope.of(context).unfocus();
             },
             child: Icon(Icons.save),
@@ -81,7 +86,7 @@ class _CreateEditNoteViewState extends State<CreateEditNoteView> {
             notchMargin: 5.0,
             child: Container(
               color: Theme.of(context).primaryColor,
-              height: 200.0,
+              height: 50.0,
             ),
           ),
           floatingActionButtonLocation:

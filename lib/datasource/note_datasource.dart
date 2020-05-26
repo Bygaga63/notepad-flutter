@@ -19,6 +19,12 @@ class NoteDatasource {
     return box.get(noteId);
   }
 
+  Future<NoteModel> update(int id, NoteModel note) async {
+    final box = await _getBox();
+    await box.put(id, note);
+    return box.get(id);
+  }
+
   Future<Box<NoteModel>> _getBox() async =>
       Hive.openBox<NoteModel>(HiveTypes.noteBoxName);
 

@@ -20,7 +20,12 @@ class CategoryRepository {
 
   Future<Category> create(Category category) async {
     final createCandidate = CategoryModel.fromDomain(category);
-    final result = await _datasource.save(createCandidate);
+    var result;
+    if (category.id == null) {
+      result = await _datasource.create(createCandidate);
+    } else {
+      result = await _datasource.update(category.id, createCandidate);
+    }
     return result.toDomain();
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutterappstackednotepad/app/locator.dart';
 import 'package:flutterappstackednotepad/models/note.dart';
 import 'package:flutterappstackednotepad/services/note_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class CreateEditNoteViewModel extends BaseViewModel {
   Note _note;
@@ -13,7 +12,6 @@ class CreateEditNoteViewModel extends BaseViewModel {
   }) : _note = note;
 
   final _noteService = di<NoteService>();
-  final _snackService = di<SnackbarService>();
 
   bool get isEdit {
     return _note.id != null;
@@ -31,6 +29,4 @@ class CreateEditNoteViewModel extends BaseViewModel {
       id: result.id,
     );
   }
-
-  void updateNote() async {}
 }

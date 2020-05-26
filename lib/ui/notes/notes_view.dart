@@ -9,7 +9,6 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('test');
     return ViewModelBuilder<NotesViewModel>.reactive(
       viewModelBuilder: () => NotesViewModel(categoryId: categoryId),
       onModelReady: (model) => model.loadNotes(categoryId),
